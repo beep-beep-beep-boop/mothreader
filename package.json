@@ -30,6 +30,9 @@
 		"extends": "stylelint-config-xo"
 	},
 	"dependencies": {
+		"@mozilla/readability": "^0.4.1",
+		"dompurify": "^2.3.4",
+		"jquery": "^3.6.0",
 		"webext-options-sync": "^2.0.1",
 		"webextension-polyfill": "^0.8.0"
 	},

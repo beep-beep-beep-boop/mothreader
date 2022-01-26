@@ -1,13 +1,13 @@
 {
-	"name": "Awesome Extension",
-	"version": "0.0.0",
-	"description": "An awesome new browser extension",
-	"homepage_url": "https://github.com/fregante/browser-extension-template",
+	"name": "mothreader",
+	"version": "0.0.1",
+	"description": "web reader for moths",
+	"homepage_url": "https://github.com/beep-beep-beep-boop/mothreader",
 	"manifest_version": 2,
 	"minimum_chrome_version": "74",
 	"applications": {
 		"gecko": {
-			"id": "awesome-extension@notlmn.github.io",
+			"id": "mothreader@beep-beep-boop-boop.github.io",
 			"strict_min_version": "67.0"
 		}
 	},
@@ -15,15 +15,15 @@
 		"128": "icon.png"
 	},
 	"permissions": [
-		"https://github.com/fregante/browser-extension-template/*",
-		"storage"
+		"storage",
+		"activeTab"
 	],
 	"content_scripts": [ 
 		{
-			"matches": [ "https://github.com/fregante/browser-extension-template/*" ],
-			"js": [ "content.js" ],
-			"css": [ "content.css" ],
-			"run_at": "document_end"
+			"matches": [ 
+				"<all_urls>"
+			],
+			"js": [ "content.js" ]
 		}
  	],
 	"options_ui": {
@@ -35,5 +35,10 @@
 		"scripts": [
 			"background.js"
 		]
+	},
+	"browser_action": {
+		"default_icon": "icon.png",
+		"default_title": "toggle mothreader"
 	}
+
 }
