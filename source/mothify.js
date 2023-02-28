@@ -28,53 +28,83 @@ function addStyle(css_str) {
     head.appendChild(style);
 }
 
-const background_color = "rgb(28, 27, 34)";
-const width = "720px";
-const font_family = "Georgia, \"Times New Roman\", serif"
-const font_size_pixels = 24;
-const line_height_pixels = 20;
-const text_color_default = "#eee";
-const text_color_1 = "rgb(158, 141, 252)";
-const text_color_2 = "rgb(88, 171, 255)";
+//const background_color = "rgb(28, 27, 34)";
+//const width = "720px";
+//const font_family = "Georgia, \"Times New Roman\", serif";
+//const font_size_pixels = 14;
+//const line_height_pixels = 20;
+//const text_color_default = "#eee";
+//const text_color_1 = "rgb(158, 141, 252)";
+//const text_color_2 = "rgb(88, 171, 255)";
+//
+//const ratio = 128 / (line_height_pixels * 4);
+//const new_bg_size = 128 / ratio;
+//const new_bg_pos = 0;//8 / ratio;
+//
+///// the style that helps put the grandient lines
+//const moth_style = `
+//p {
+//    font-size:${font_size_pixels}px;
+//    line-height:${line_height_pixels}px;
+//    background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAABgCAIAAAC46DQiAAAABmJLR0QALwAxADZQwRmUAAAAaklEQVQoz73SsQ3EIBQE0flU8DuAEq8TtwgVQAfj5GQJOyd60kQbLHr9tEDr8AedqaEGFIAjLEgoHdqHAfUdSZ0aqCd3JsAqDaC/qABjj0zVDBXi3E5YkAU6tA8D6h7R1BkKeHJnrud8Ozcg8ECQiy6ifAAAAABJRU5ErkJggg==);
+//    background-position-y:${new_bg_pos}px;
+//    background-size:100% ${new_bg_size}px;
+//    -webkit-background-clip:text;
+//    -webkit-text-fill-color:transparent
+//}
+//body {
+//    font-family: ${font_family};
+//    background-color: ${background_color};
+//    color: ${text_color_default}
+//}
+//.page {
+//    max-width: ${width};
+//    margin: 0 auto;
+//}
+//
+//.page,
+//.page .line {
+//    text-align: justify; 
+//}
+//`;
 
-const ratio = 128 / (new_line_height * 4)
-const new_bg_size = 128 / ratio;
-const new_bg_pos = 0;//8 / ratio;
+function gen_style(font_size_pixels, line_height_pixels, offset_pixels) {
+    const ratio = 128 / (line_height_pixels * 4);
+    const new_bg_size = 128 / ratio;
+    const new_bg_pos = 0;//8 / ratio;
 
-/// the style that helps put the grandient lines
-const moth_style = `
-p {
-    font-size:${font_size_pixels}px;
-    line-height:${line_height_pixels}px;
-    background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAABgCAIAAAC46DQiAAAAYUlEQVQoz73SwQ3DIBAF0aetYDuAEtNJWoQKTAfOgcgS+M5pVnMafS0+X4JWHyAv4CbmdQDJICrthULfpYuckU52DshoUDd0KKuUZizc5zpJRlBpLxT6KtdFT3aO3H/wjx/oyySm/xnbdAAAAABJRU5ErkJggg==);
-    background-position-y:${new_bg_pos}px;
-    background-size:100% ${new_bg_size}px;
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent
-}
-body {
-    font-family: ${font_family};
-    background-color: ${background_color};
-}
-.page {
-    max-width: ${width};
-    margin: 0 auto;
-}
+    const style = {
+        "font-size":`${font_size_pixels}px`,
+        "line-height":`${line_height_pixels}px`,
+        "background-image":"url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAABgCAIAAAC46DQiAAAAYUlEQVQoz73SwQ3DIBAF0aetYDuAEtNJWoQKTAfOgcgS+M5pVnMafS0+X4JWHyAv4CbmdQDJICrthULfpYuckU52DshoUDd0KKuUZizc5zpJRlBpLxT6KtdFT3aO3H/wjx/oyySm/xnbdAAAAABJRU5ErkJggg==)",
+        "background-position-y":`${new_bg_pos}px`,
+        "background-size":`100% ${new_bg_size}px`,
+        "-webkit-background-clip":"text",
+        "-webkit-text-fill-color":"transparent",
+    };
 
-.page,
-.page .line {
-    text-align: justify; 
+    return style;
 }
-`;
 
 function mothify() {
-    console.log("meow");
     // replace document with readable document
     //document.body.innerHTML = readable();
 
-    clearStyles();
+    //clearStyles();
 
-    addStyle(moth_style);
+    //addStyle(moth_style);
+
+    $('p').each(function () {
+        const obj = $(this);
+        const element_font_size = parseInt(obj.css('font-size'));
+        const element_line_height = parseInt(obj.css('line-height'));
+        const element_offset = obj.offset().top;
+
+        const new_css = gen_style(element_font_size, element_line_height, element_offset);
+
+        obj.css(new_css);
+    });
+
 //
 //    (function () {
 //
