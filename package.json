@@ -43,9 +43,13 @@
 		"parcel": "^2.0.0-rc.0",
 		"stylelint": "^13.13.1",
 		"stylelint-config-xo": "^0.20.0",
+		"web-ext": "^7.5.0",
 		"xo": "^0.44.0"
 	},
 	"webExt": {
 		"sourceDir": "distribution"
+	},
+	"volta": {
+		"node": "16.19.1"
 	}
 }
