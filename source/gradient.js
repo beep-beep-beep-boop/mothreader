@@ -51,3 +51,5 @@ function gen_grad_str(color_1, color_fill, color_2) {
 
     return canvas.toDataURL();
 }
+
+export { gen_grad_str };
