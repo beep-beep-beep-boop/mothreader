@@ -1,6 +1,6 @@
 # mothreader
 
-> reader view with coloring that makes it easier to read things (hopefully)
+> color web pages text with a gradient that makes it easier to read things (hopefully)
 
 ### Build locally
 
