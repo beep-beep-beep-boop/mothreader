@@ -1,25 +1,22 @@
 // Don't forget to import this wherever you use it
-import browser from 'webextension-polyfill';
+import browser, { storage } from 'webextension-polyfill';
 
 import optionsStorage from './options-storage.js';
+import { gen_grad_str } from './gradient.js';
+import { save_light_gradstr } from './gradstr.js';
 
 optionsStorage.syncForm('#options-form');
 
-const rangeInputs = [...document.querySelectorAll('input[type="range"][name^="color"]')];
-const numberInputs = [...document.querySelectorAll('input[type="number"][name^="color"]')];
-const output = document.querySelector('.color-output');
+const colorInputs = [...document.querySelectorAll('input[type="color"]')];
 
-function updateColor() {
-	output.style.backgroundColor = `rgb(${rangeInputs[0].value}, ${rangeInputs[1].value}, ${rangeInputs[2].value})`;
+function updateGradient() {
+	const light_str = gen_grad_str(colorInputs[0].value, colorInputs[1].value, colorInputs[2].value);
+	save_light_gradstr(light_str);
 }
 
-function updateInputField(event) {
-	numberInputs[rangeInputs.indexOf(event.currentTarget)].value = event.currentTarget.value;
-}
 
-for (const input of rangeInputs) {
-	input.addEventListener('input', updateColor);
-	input.addEventListener('input', updateInputField);
+console.log('meow');
+for (const color of colorInputs) {
+	color.addEventListener('input', updateGradient, false);
+	color.addEventListener('change', updateGradient, false)
 }
-
-window.addEventListener('load', updateColor);

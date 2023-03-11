@@ -34,18 +34,18 @@ function gen_grad_str(color_1, color_fill, color_2) {
 
     let canvas = document.querySelector("canvas"), // Select our canvas element
         ctx = canvas.getContext("2d"), // Save the context we're going to use
-        width = a[0].length, // Get the width
-        height = a.length, // Get the height
-        scale = 10; // Scales the whole image by this amount
+        height = a[0].length, // Get the width
+        width = a.length, // Get the height
+        scale = 1; // Scales the whole image by this amount
 
     canvas.width = width * scale; // Set the canvas width
     canvas.height = height * scale; // Set the canvas height
 
     // Loop through each color and draw that section
-    for(var row = 0; row < height; row++) {
-        for(var col = 0; col < width; col++) {
+    for(var col = 0; col < height; col++) {
+        for(var row = 0; row < width; row++) {
             ctx.fillStyle = a[row][col]; // Set the color to the one specified
-            ctx.fillRect(col * scale, row * scale, scale, scale); // Actually draw the rectangle
+            ctx.fillRect(row * scale, col * scale, scale, scale); // Actually draw the rectangle
         }
     }
 

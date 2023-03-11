@@ -1,6 +1,7 @@
 import { Readability } from '@mozilla/readability'
 import DOMPurify from 'dompurify';
 import $ from "jquery";
+import { get_light_gradstr } from './gradstr';
 
 /// return html of only the article that's on the page
 function readable() {
@@ -68,7 +69,7 @@ function addStyle(css_str) {
 //}
 //`;
 
-function gen_style(font_size_pixels, line_height_pixels, offset_pixels) {
+function gen_style(font_size_pixels, line_height_pixels, offset_pixels, gradient_str) {
     const ratio = 128 / (line_height_pixels * 4);
     const new_bg_size = 128 / ratio;
     const new_bg_pos = 0;//8 / ratio;
@@ -76,7 +77,7 @@ function gen_style(font_size_pixels, line_height_pixels, offset_pixels) {
     const style = {
         "font-size":`${font_size_pixels}px`,
         "line-height":`${line_height_pixels}px`,
-        "background-image":"url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAABgCAIAAAC46DQiAAAAYUlEQVQoz73SwQ3DIBAF0aetYDuAEtNJWoQKTAfOgcgS+M5pVnMafS0+X4JWHyAv4CbmdQDJICrthULfpYuckU52DshoUDd0KKuUZizc5zpJRlBpLxT6KtdFT3aO3H/wjx/oyySm/xnbdAAAAABJRU5ErkJggg==)",
+        "background-image":`url(${gradient_str})`,
         "background-position-y":`${new_bg_pos}px`,
         "background-size":`100% ${new_bg_size}px`,
         "-webkit-background-clip":"text",
@@ -86,7 +87,7 @@ function gen_style(font_size_pixels, line_height_pixels, offset_pixels) {
     return style;
 }
 
-function mothify() {
+async function mothify() {
     // replace document with readable document
     //document.body.innerHTML = readable();
 
@@ -94,13 +95,15 @@ function mothify() {
 
     //addStyle(moth_style);
 
+    const gradient_str = await get_light_gradstr();
+
     $('p').each(function () {
         const obj = $(this);
         const element_font_size = parseInt(obj.css('font-size'));
         const element_line_height = parseInt(obj.css('line-height'));
         const element_offset = obj.offset().top;
 
-        const new_css = gen_style(element_font_size, element_line_height, element_offset);
+        const new_css = gen_style(element_font_size, element_line_height, element_offset, gradient_str);
 
         obj.css(new_css);
     });
