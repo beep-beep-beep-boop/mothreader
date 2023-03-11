@@ -8,6 +8,7 @@ export default new OptionsSync({
 		dark_color_1: '#9e8dfc',
 		dark_color_fill: '#eeeeee',
 		dark_color_2: '#58acff',
+		always_moth: false,
 	},
 	migrations: [
 		OptionsSync.migrations.removeUnused,
