@@ -1,7 +1,7 @@
 {
 	"name": "mothreader",
-	"version": "0.0.1",
-	"description": "web reader for moths",
+	"version": "0.1.0",
+	"description": "glasses for moths",
 	"homepage_url": "https://github.com/beep-beep-beep-boop/mothreader",
 	"manifest_version": 2,
 	"minimum_chrome_version": "74",
