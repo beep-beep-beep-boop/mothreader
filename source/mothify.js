@@ -1,7 +1,8 @@
 import { Readability } from '@mozilla/readability'
 import DOMPurify from 'dompurify';
 import $ from "jquery";
-import { get_light_gradstr } from './gradstr';
+import { get_dark_gradstr, get_light_gradstr } from './gradstr';
+import { is_dark } from './is_dark';
 
 /// return html of only the article that's on the page
 function readable() {
@@ -95,7 +96,16 @@ async function mothify() {
 
     //addStyle(moth_style);
 
-    const gradient_str = await get_light_gradstr();
+    const bg_color_str = $('body').css('background-color');
+    const dark = is_dark(bg_color_str);
+
+    let gradient_str;
+
+    if (dark === true) {
+        gradient_str = await get_dark_gradstr();
+    } else {
+        gradient_str = await get_light_gradstr();
+    }
 
     $('p').each(function () {
         const obj = $(this);
