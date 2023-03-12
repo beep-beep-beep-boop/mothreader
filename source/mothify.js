@@ -96,22 +96,32 @@ async function mothify() {
 
     //addStyle(moth_style);
 
-    const bg_color_str = $('body').css('background-color');
-    const dark = is_dark(bg_color_str);
-
-    let gradient_str;
-
-    if (dark === true) {
-        gradient_str = await get_dark_gradstr();
-    } else {
-        gradient_str = await get_light_gradstr();
-    }
+    const dark_gradient_str = await get_dark_gradstr();
+    const light_gradient_str = await get_light_gradstr();
 
     $('p').each(function () {
         const obj = $(this);
         const element_font_size = parseInt(obj.css('font-size'));
         const element_line_height = parseInt(obj.css('line-height'));
         const element_offset = obj.offset().top;
+
+        // detect whether the pharagraph has a dark or light text color
+        // this seems more reliable than checking the background color
+        // note: for pages with a lot of pharagrapg elements i feel like this
+        // might be pretty slow.
+        // i wonder if just getting the color of the body element is good enough?
+        // just thinking, e.g. if there's any p elmenets in a light page that happen
+        // to have a dark background it might color them incorrectly if we did it that way...
+        const p_color_str = obj.css('color');
+        const p_is_dark = is_dark(p_color_str);
+
+        let gradient_str;
+
+        if (p_is_dark === false) {
+            gradient_str = dark_gradient_str;
+        } else {
+            gradient_str = light_gradient_str;
+        }
 
         const new_css = gen_style(element_font_size, element_line_height, element_offset, gradient_str);
 
