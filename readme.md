@@ -2,6 +2,10 @@
 
 > color web pages text with a gradient that makes it easier to read things (hopefully)
 
+[Install from addons.mozilla (firefox)](https://addons.mozilla.org/en-US/firefox/addon/mothreader/)
+
+Can also manually install from the zip on the releases page
+
 ### Build locally
 
 (recommend using [volta](https://volta.sh/))
