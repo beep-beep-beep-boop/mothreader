@@ -32,12 +32,16 @@ function moth_grad_array (color_1, color_fill, color_2) {
 function gen_grad_str(color_1, color_fill, color_2) {
     const a = moth_grad_array(color_1, color_fill, color_2)
 
-    let canvas = document.querySelector("canvas"), // Select our canvas element
-        ctx = canvas.getContext("2d"), // Save the context we're going to use
+    const canvas = document.createElement("canvas");
+    canvas.id = "mothreader_canvas";
+    canvas.hidden = true;
+    document.body.appendChild(canvas)
+
+    let ctx = canvas.getContext("2d"), // Save the context we're going to use
         height = a[0].length, // Get the width
         width = a.length, // Get the height
         scale = 1; // Scales the whole image by this amount
-
+    
     canvas.width = width * scale; // Set the canvas width
     canvas.height = height * scale; // Set the canvas height
 
