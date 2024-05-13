@@ -24,8 +24,8 @@ function shift (a) {
 }
 
 function moth_grad_array (color_1, color_fill, color_2) {
-    const line_1 = shift([...strip(color_1), ...gradient(color_1, color_fill), ...strip(color_fill), ...gradient(color_fill, color_2), ...strip(color_2), ...gradient(color_2, color_fill), ...strip(color_fill), ...gradient(color_fill, color_1)]);
-    const line_2 = shift([...strip(color_fill), ...gradient(color_fill, color_1), ...strip(color_1), ...gradient(color_1, color_fill), ...strip(color_fill), ...gradient(color_fill, color_2), ...strip(color_2), ...gradient(color_2, color_fill)]);
+    const line_1 = shift([...strip(color_fill), ...gradient(color_fill, color_1), ...strip(color_1), ...gradient(color_1, color_fill), ...strip(color_fill), ...gradient(color_fill, color_2), ...strip(color_2), ...gradient(color_2, color_fill)]);
+    const line_2 = shift([...strip(color_1), ...gradient(color_1, color_fill), ...strip(color_fill), ...gradient(color_fill, color_2), ...strip(color_2), ...gradient(color_2, color_fill), ...strip(color_fill), ...gradient(color_fill, color_1)]);
     return [line_1, line_2];
 }
 
