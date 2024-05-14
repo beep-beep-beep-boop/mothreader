@@ -108,9 +108,8 @@ $.fn.findFirstTextContainingNonPChild = function() {
 function mothify_element(element, light_gradient_str, dark_gradient_str) {
     let element_to_get_values_from = element;
 
-
-    // this is for situations where the p element contains a span as a child
-    // where the font size or line height is set in the span and not the p element.
+    // this is for situations where the p element has a child which contains the text
+    // where the font size or line height is set in the child and not the p element.
     if (element.immediateText().trim().length === 0) {
         // if the element contains no text, its children must.
         let text_containing_child = element.findFirstTextContainingNonPChild();
