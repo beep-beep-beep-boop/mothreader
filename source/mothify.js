@@ -71,21 +71,90 @@ function addStyle(css_str) {
 //`;
 
 function gen_style(font_size_pixels, line_height_pixels, offset_pixels, gradient_str) {
-    const ratio = 128 / (line_height_pixels * 4);
-    const new_bg_size = 128 / ratio;
     const new_bg_pos = 0;//8 / ratio;
+    const background_size_px = line_height_pixels * 4;
 
     const style = {
-        "font-size":`${font_size_pixels}px`,
-        "line-height":`${line_height_pixels}px`,
         "background-image":`url(${gradient_str})`,
         "background-position-y":`${new_bg_pos}px`,
-        "background-size":`100% ${new_bg_size}px`,
+        "background-size":`100% ${background_size_px}px`,
         "-webkit-background-clip":"text",
         "-webkit-text-fill-color":"transparent",
     };
 
     return style;
+}
+
+/// return only the text that is directly in the node, not in any of its children.
+$.fn.immediateText = function() {
+    return this.contents().not(this.children()).text();
+};
+
+/// return the first child of the element that directly contains text and is not a `p` element.
+$.fn.findFirstTextContainingNonPChild = function() {
+    let child = null;
+
+    $(this).children(":not(p)").each(function() {
+        if ($(this).immediateText().trim().length > 0) {
+            child = $(this);
+            return;
+        }
+    });
+
+    return child;
+}
+
+/// mothify an individual jquery element
+function mothify_element(element, light_gradient_str, dark_gradient_str) {
+    let element_to_get_values_from = element;
+
+
+    // this is for situations where the p element contains a span as a child
+    // where the font size or line height is set in the span and not the p element.
+    if (element.immediateText().trim().length === 0) {
+        // if the element contains no text, its children must.
+        let text_containing_child = element.findFirstTextContainingNonPChild();
+        if (text_containing_child === null) {
+            // if there's no child containing text that's not a p element, return.
+            // the child p element will be visited later and mothified i think.
+            return;
+        } 
+
+        // we should set the font size and line height values from that of the child instead;
+        element_to_get_values_from = text_containing_child;
+    }
+
+    const element_font_size = parseInt(element_to_get_values_from.css('font-size'));
+
+    const css_line_height = element_to_get_values_from.css('line-height');
+
+    let element_line_height;
+    if (css_line_height == "normal") element_line_height = 1.2 * element_font_size;
+    else element_line_height = parseInt(css_line_height);
+
+    const element_offset = element.offset().top;
+
+    // detect whether the pharagraph has a dark or light text color
+    // this seems more reliable than checking the background color
+    // note: for pages with a lot of pharagrapg elements i feel like this
+    // might be pretty slow.
+    // i wonder if just getting the color of the body element is good enough?
+    // just thinking, e.g. if there's any p elmenets in a light page that happen
+    // to have a dark background it might color them incorrectly if we did it that way...
+    const p_color_str = element_to_get_values_from.css('color');
+    const p_is_dark = is_dark(p_color_str);
+
+    let gradient_str;
+
+    if (p_is_dark === false) {
+        gradient_str = dark_gradient_str;
+    } else {
+        gradient_str = light_gradient_str;
+    }
+
+    const new_css = gen_style(element_font_size, element_line_height, element_offset, gradient_str);
+
+    element.css(new_css);
 }
 
 async function mothify() {
@@ -101,31 +170,11 @@ async function mothify() {
 
     $('p').each(function () {
         const obj = $(this);
-        const element_font_size = parseInt(obj.css('font-size'));
-        const element_line_height = parseInt(obj.css('line-height'));
-        const element_offset = obj.offset().top;
 
-        // detect whether the pharagraph has a dark or light text color
-        // this seems more reliable than checking the background color
-        // note: for pages with a lot of pharagrapg elements i feel like this
-        // might be pretty slow.
-        // i wonder if just getting the color of the body element is good enough?
-        // just thinking, e.g. if there's any p elmenets in a light page that happen
-        // to have a dark background it might color them incorrectly if we did it that way...
-        const p_color_str = obj.css('color');
-        const p_is_dark = is_dark(p_color_str);
-
-        let gradient_str;
-
-        if (p_is_dark === false) {
-            gradient_str = dark_gradient_str;
-        } else {
-            gradient_str = light_gradient_str;
+        if (obj.text().trim().length > 0) {
+            // if the p element conatines text
+            mothify_element(obj, light_gradient_str, dark_gradient_str);
         }
-
-        const new_css = gen_style(element_font_size, element_line_height, element_offset, gradient_str);
-
-        obj.css(new_css);
     });
 
 //
