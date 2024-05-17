@@ -13,7 +13,6 @@ function is_dark(rgb_str) {
     const rgb = getRGB(rgb_str);
 
     const lightness = chroma.rgb(rgb.red, rgb.green, rgb.blue).hsl()[2];
-    console.log(`lightness: ${lightness}`);
 
     return lightness <= 0.5
 }

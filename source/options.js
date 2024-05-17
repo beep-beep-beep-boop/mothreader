@@ -17,8 +17,6 @@ function updateGradient() {
 	save_dark_gradstr(dark_str);
 }
 
-
-console.log('meow');
 for (const color of colorInputs) {
 	color.addEventListener('input', updateGradient, false);
 	color.addEventListener('change', updateGradient, false)
