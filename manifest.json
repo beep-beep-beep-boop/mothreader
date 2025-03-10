@@ -1,0 +1,59 @@
+{
+	"name": "mothreader",
+	"version": "0.2.0",
+	"description": "reading accessibility helper",
+	"homepage_url": "https://github.com/beep-beep-beep-boop/mothreader",
+
+	"{{chrome}}.manifest_version": 3,
+	"{{firefox}}.manifest_version": 2,
+
+	"minimum_chrome_version": "100",
+
+	"{{chrome}}.browser_specific_settings": {
+		"gecko": {
+			"id": "mothreader@beep-beep-boop-boop.github.io",
+			"strict_min_version": "100.0"
+		}
+	},
+	"{{firefox}}.applications": {
+		"gecko": {
+			"id": "mothreader@beep-beep-boop-boop.github.io",
+			"strict_min_version": "100.0"
+		}
+	},
+
+	"icons": {
+		"128": "source/icon.png"
+	},
+	"permissions": [
+		"storage",
+		"scripting",
+		"activeTab"
+	],
+	"options_ui": {
+		"page": "source/options.html"
+	},
+
+	"{{chrome}}.background": {
+		"service_worker": "source/background.js",
+		"type": "module"
+	},
+	"{{firefox}}.background": {
+		"persistent": false,
+		"scripts": [
+			"source/background.js"
+		]
+	},
+	
+	"{{chrome}}.action": {
+		"default_icon": {
+			"128": "source/icon.png"
+		},
+		"default_title": "toggle mothreader"
+	},
+	"{{firefox}}.browser_action": {
+		"default_icon": "source/icon.png",
+		"default_title": "toggle mothreader"
+	}
+
+}

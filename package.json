@@ -1,13 +1,15 @@
 {
 	"private": true,
 	"scripts": {
-		"build": "parcel build source/manifest.json source/content.js --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0",
-		"lint": "run-p lint:*",
-		"lint-fix": "run-p 'lint:* -- --fix'",
-		"lint:css": "stylelint source/**/*.css",
-		"lint:js": "xo",
-		"test": "run-p lint:* build",
-		"watch": "parcel watch source/manifest.json source/content.js --dist-dir distribution --no-cache --no-hmr"
+		"vite:dev": "vite dev",
+		"build": "rm -f ./dist-*.zip && rm -rf ./dist && vite build && cp ./source/icon.png ./dist/source/icon.png && parcel build source/content.js --no-content-hash --no-source-maps --dist-dir dist/source --no-cache --detailed-report 0 && cd ./dist && zip -r ../dist-$TARGET .",
+		"// build (old)": "parcel build source/manifest.json source/content.js --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0",
+		"// lint": "run-p lint:*",
+		"// lint-fix": "run-p 'lint:* -- --fix'",
+		"// lint:css": "stylelint source/**/*.css",
+		"// lint:js": "xo",
+		"// test": "run-p lint:* build",
+		"// watch": "parcel watch source/manifest.json source/content.js --dist-dir distribution --no-cache --no-hmr"
 	},
 	"browserslist": [
 		"last 1 Chrome version",
@@ -34,6 +36,8 @@
 		"chroma-js": "^2.4.2",
 		"dompurify": "^2.3.4",
 		"jquery": "^3.6.0",
+		"vite": "^6.2.1",
+		"vite-plugin-web-extension": "^4.4.3",
 		"webext-options-sync": "^2.0.1",
 		"webextension-polyfill": "^0.8.0"
 	},
