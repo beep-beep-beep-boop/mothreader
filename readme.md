@@ -8,23 +8,15 @@ Can also manually install from the zip on the releases page
 
 ### Build locally
 
-(recommend using [volta](https://volta.sh/))
-
 1. Checkout the copied repository to your local machine eg. with `git clone https://github.com/beep-beep-boop-boop/mothreader/`
-1. run `npm install` to install all required dependencies
-1. run `npm run build`
+2. run `npm install` to install all required dependencies
+3. run `./build.sh`
 
-The build step will create the `distribution` folder, this folder will contain the generated extension.
+this will create a `dist-chrome.zip` and `dist-firefox.zip`, which are (hopefully) valid web extension files.
 
-You can then run `npx web-ext build` to build the extension .zip
+### Debugging the extension
 
-### Run the extension
-
-Using [web-ext](https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/) is recommened for automatic reloading and running in a dedicated browser instance. Alternatively you can load the extension manually (see below).
-
-1. run `npm run watch` to watch for file changes and build continuously
-1. in another terminal, run `npx web-ext run` for Firefox or `web-ext run -t chromium`
-1. Check that the extension is loaded by opening the extension options ([in Firefox](media/extension_options_firefox.png) or [in Chrome](media/extension_options_chrome.png)).
+I didn't bother getting this to work again, so you probably just have to do the build step and add it manually. In firefox you can go to `about:debugging` and add a temporary extension w/ debugging tool access.
 
 #### Manually
 
