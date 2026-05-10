@@ -84,16 +84,16 @@ function global_style(light_gradient_str, dark_gradient_str) {
         -webkit-text-fill-color: transparent;
     }
 
-    .mothified-dark a * {
+    .mothified-dark a {
         background-image: none !important;
-        -webkit-background-clip: revert !important;
-        -webkit-text-fill-color: revert !important;
+        -webkit-background-clip: initial !important;
+        -webkit-text-fill-color: initial !important;
     }
 
-    .mothified-light a * {
+    .mothified-light a {
         background-image: none !important;
-        -webkit-background-clip: revert !important;
-        -webkit-text-fill-color: revert !important;
+        -webkit-background-clip: initial !important;
+        -webkit-text-fill-color: initial !important;
     }
     `;
 
@@ -182,7 +182,7 @@ function mothify_element(element, light_gradient_str, dark_gradient_str) {
 
     element.css(new_css);
 
-    if (p_is_dark === true) {
+    if (p_is_dark === false) {
         element.addClass('mothified-dark');
     } else {
         element.addClass('mothified-light');
