@@ -70,16 +70,43 @@ function addStyle(css_str) {
 //}
 //`;
 
+function global_style(light_gradient_str, dark_gradient_str) {
+    const style_str = `
+    .mothified-dark {
+        background-image: url(${dark_gradient_str});
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .mothified-light {
+        background-image: url(${light_gradient_str});
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .mothified-dark a {
+        background-image: none !important;
+        -webkit-background-clip: initial !important;
+        -webkit-text-fill-color: initial !important;
+    }
+
+    .mothified-light a {
+        background-image: none !important;
+        -webkit-background-clip: initial !important;
+        -webkit-text-fill-color: initial !important;
+    }
+    `;
+
+    return style_str;
+}
+
 function gen_style(font_size_pixels, line_height_pixels, offset_pixels, gradient_str) {
     const new_bg_pos = 0;//8 / ratio;
     const background_size_px = line_height_pixels * 4;
 
     const style = {
-        "background-image":`url(${gradient_str})`,
         "background-position-y":`${new_bg_pos}px`,
         "background-size":`100% ${background_size_px}px`,
-        "-webkit-background-clip":"text",
-        "-webkit-text-fill-color":"transparent",
     };
 
     return style;
@@ -154,6 +181,12 @@ function mothify_element(element, light_gradient_str, dark_gradient_str) {
     const new_css = gen_style(element_font_size, element_line_height, element_offset, gradient_str);
 
     element.css(new_css);
+
+    if (p_is_dark === false) {
+        element.addClass('mothified-dark');
+    } else {
+        element.addClass('mothified-light');
+    }
 }
 
 async function mothify() {
@@ -175,6 +208,12 @@ async function mothify() {
             mothify_element(obj, light_gradient_str, dark_gradient_str);
         }
     });
+
+    // add the global style
+    $('<style>')
+        .attr('id', 'mothreader-addon-global-style')
+        .text(global_style(light_gradient_str, dark_gradient_str))
+        .appendTo(document.head);
 
 //
 //    (function () {
